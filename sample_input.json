@@ -1,0 +1,18 @@
+{
+  "input_layer": {
+      "height":0,
+      "width":3,
+      "type":"float"
+  },
+
+  "hidden_layers_nodes": [500,500,500],
+
+  "output_layer":{
+      "classes":2,
+      "type":"float"
+  },
+
+  "batch_size":50,
+
+  "learning_rate":0.01
+}
