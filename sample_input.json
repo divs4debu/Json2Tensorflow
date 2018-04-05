@@ -4,6 +4,9 @@
   "hidden_layers": [2],
   "epochs": 1000,
   "learning_rate": 0.01,
+  "optimizer": "gradient_descent",
+  "activation":["None", "None"],
+  "cost": "square",
   "input_data": [[1], [2], [3], [4]],
   "output_data": [[0], [-1], [-2], [-3]]
 }

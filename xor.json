@@ -4,6 +4,9 @@
   "hidden_layers": [10],
   "epochs": 1000,
   "learning_rate": 0.01,
+  "optimizer": "adam",
+  "activation":["sigmoid", "sigmoid"],
+  "cost": "square",
   "input_data": [[0, 0], [0, 1], [1, 0], [1, 1]],
   "output_data": [[0], [1], [1], [0]]
 }

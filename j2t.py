@@ -2,6 +2,10 @@
 import tensorflow as tf
 import json
 
+from tf_utils.activation import get_activation_function
+from tf_utils.cost import get_cost
+from tf_utils.optimizer import get_optimizer
+
 
 def read_json_file(file_path):
     with open(file_path) as f:
@@ -25,6 +29,9 @@ y_input = tf.placeholder(tf.float32)
 
 epochs = config['epochs']
 learning_rate = config['learning_rate']
+opt = config['optimizer']
+act = config['activation']
+cost_function = config['cost']
 
 n_inputs = config['input_features']
 n_hidden = config['hidden_layers']
@@ -33,7 +40,7 @@ n_output = config['output']
 layout = [n_inputs] + n_hidden + [n_output]
 
 print("x_data: ", x_data, "\ny_data: ", y_data, "\nepochs: ", epochs, "\nlearning_rate: ",
-      learning_rate, "\nn_inputs: ", n_inputs, "\nn_outputs: ", n_output, "\nlayout: ", layout)
+      learning_rate, "\nn_inputs: ", n_inputs, "\nn_outputs: ", n_output, "\nlayout: ", layout, '\nact: ', act)
 
 # creating model
 
@@ -51,21 +58,22 @@ for i in range(len(_layered_model)):
     if i is 0:
         if n_inputs == 1:
             _computation_graph.append(
-                tf.sigmoid(tf.add((x_input *_layered_model[i]['weights']), _layered_model[i]['biases'])))
+                get_activation_function(act[i], tf.add((x_input *_layered_model[i]['weights']), _layered_model[i]['biases'])))
         else:
-            _computation_graph.append(tf.sigmoid(tf.add(tf.matmul(x_input,  _layered_model[i]['weights']), _layered_model[i]['biases'])))
+            _computation_graph.append(
+                get_activation_function(act[i], tf.add(tf.matmul(x_input,  _layered_model[i]['weights']), _layered_model[i]['biases'])))
     else:
         _computation_graph.append(
-            tf.sigmoid(tf.add(tf.matmul(_computation_graph[i - 1], _layered_model[i]['weights']), _layered_model[i]['biases'])))
+            get_activation_function(act[i], tf.add(tf.matmul(_computation_graph[i - 1], _layered_model[i]['weights']), _layered_model[i]['biases'])))
 
 output = _computation_graph[len(_computation_graph)-1]
 
 print("Output_node: ", output)
 
 # train
-
-cost =  tf.reduce_mean(-y_input*tf.log(output) - (1 - y_input)*tf.log(1 - output), name="cost")
-optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
+# -y_input*tf.log(output) - (1 - y_input)*tf.log(1 - output)
+cost = tf.reduce_mean(get_cost(cost_function, output- y_input), name="cost")
+optimizer = get_optimizer(opt, learning_rate).minimize(cost)
 
 
 init = tf.global_variables_initializer()
