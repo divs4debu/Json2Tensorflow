@@ -1,25 +1,9 @@
 {
-  "input_layer": {
-      "height":0,
-      "width":1,
-      "type":"float"
-  },
-
-  "hidden_layers_nodes": [],
-
-  "output_layer":{
-      "classes":1,
-      "type":"float"
-  },
-
-  "batch_size":2,
-
-  "learning_rate":0.01,
-
-  "epoch":50,
-
-  "data":{
-      "inputs":[1.0,2.0,3.0,4.0,5.0],
-      "outputs":[2.0,3.0,4.0,5.0,6.0]
-  }
+  "input_features" : 1,
+  "output": 1,
+  "hidden_layers": [2],
+  "epochs": 1000,
+  "learning_rate": 0.01,
+  "input_data": [[1], [2], [3], [4]],
+  "output_data": [[0], [-1], [-2], [-3]]
 }
