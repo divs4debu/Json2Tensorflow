@@ -1,0 +1,9 @@
+{
+  "input_features" : 2,
+  "output": 1,
+  "hidden_layers": [10],
+  "epochs": 1000,
+  "learning_rate": 0.01,
+  "input_data": [[0, 0], [0, 1], [1, 0], [1, 1]],
+  "output_data": [[0], [1], [1], [0]]
+}
